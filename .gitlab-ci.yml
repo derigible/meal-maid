@@ -1,0 +1,7 @@
+test:
+  stage: test
+  script:
+  - apt-get update -qy
+  - bundle install --path /cache
+  - bundle exec rails db:create db:migrate RAILS_ENV=test
+  - bundle exec rspec

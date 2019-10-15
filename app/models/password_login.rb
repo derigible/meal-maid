@@ -38,14 +38,25 @@ class PasswordLogin < OmniAuth::Identity::Models::ActiveRecord
 
       email = params[:email]
       user = User.find_by(email: email)
-
-      if user.blank?
-        user = User.create(email: email, preferred_name: preferred_name(params))
-        if params[:invitation_code].present?
-          Contact.find_by(authorization_code: params[:invitation_code])&.update!(contact: @user)
-        end
-      end
+      user = create_and_add_user_to_account(params, email) if user.blank?
       user
+    end
+
+    def create_and_add_user_to_account(params, email)
+      user = User.new(email: email, preferred_name: preferred_name(params))
+      account = find_or_create_account(params)
+      errors.add(:account, 'Account not found for invitation!') unless account
+      user.account = account
+      user.save!
+      user
+    end
+
+    def find_or_create_account(params)
+      if params[:invitation_code].present?
+        AccountInvitation.find_by(invitation_code: params[:invitation_code])&.account
+      else
+        Account.create!
+      end
     end
 
     def create_username_login(create_attrs)

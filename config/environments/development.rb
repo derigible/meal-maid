@@ -34,6 +34,8 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = { :address => '127.0.0.1', :port => 1025 }
   config.action_mailer.raise_delivery_errors = false
 
   config.action_mailer.perform_caching = false
@@ -60,7 +62,8 @@ Rails.application.configure do
 
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
-  # config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+  config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+  routes.default_url_options[:host] = 'localhost:3000'
 
   config.x.meal_maid.host = ENV['MEAL_MAID_HOST'] || 'localhost:8081'
   config.x.meal_maid.protocol = ENV['MEAL_MAID_PROTOCOL'] || 'http'

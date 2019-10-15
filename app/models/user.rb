@@ -3,6 +3,10 @@
 class User < ApplicationRecord
   include Rails.application.routes.url_helpers
 
+  belongs_to :account
+  has_many :logins, inverse_of: :user, dependent: :destroy
+  has_many :account_invitations, inverse_of: :user, dependent: :destroy
+
   validates :email, presence: true
 
   def locked?

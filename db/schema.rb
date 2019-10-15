@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_15_173800) do
+ActiveRecord::Schema.define(version: 2019_10_15_215542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "account_invitations", id: :serial, force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "account_id", null: false
+    t.string "invitation_code", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_account_invitations_on_account_id"
+    t.index ["invitation_code"], name: "index_account_invitations_on_invitation_code"
+    t.index ["user_id"], name: "index_account_invitations_on_user_id"
+  end
 
   create_table "accounts", id: :serial, force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
@@ -68,6 +79,8 @@ ActiveRecord::Schema.define(version: 2019_10_15_173800) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "account_invitations", "accounts"
+  add_foreign_key "account_invitations", "users"
   add_foreign_key "logins", "users"
   add_foreign_key "users", "accounts"
 end

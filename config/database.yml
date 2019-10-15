@@ -26,7 +26,6 @@ default: &default
 
 development:
   <<: *default
-  database: meal_maid_development
   password: <%= ENV.fetch("DB_PASSWORD", "password") %>
   database: <%= ENV.fetch("DB_NAME", "meal_maid_development") %>
 
@@ -62,6 +61,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
+  password: <%= ENV.fetch("DB_PASSWORD", "password") %>
   database: meal_maid_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
