@@ -5,7 +5,7 @@
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  
+
   config.cache_classes = true
 
   # Do not eager load code on boot. This avoids loading your whole application
@@ -45,4 +45,12 @@ Rails.application.configure do
 
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
+
+  config.active_storage.service = :test
+  config.x.meal_maid.lock_after_attempts = 100
+  config.x.meal_maid.unlock_after_time = 1.minute
+  config.x.meal_maid.expire_session_after_time = 1.year
+  config.x.meal_maid.remember_me_expire_session_after_time = 1.month
+
+  config.session_store :cookie_store, key: '_meal_maid_session', httponly: true, expire_after: 1.day
 end

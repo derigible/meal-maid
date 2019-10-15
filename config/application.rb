@@ -28,5 +28,26 @@ module MealMaid
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
+
+    config.autoload_paths << Rails.root.join('lib')
+
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '*',
+          headers: :any,
+          expose: %w[total per-page],
+          methods: %i[get post put patch delete options]
+      end
+    end
+
+    config.before_configuration do
+      env_file = File.join(Rails.root, 'config', 'application.yml')
+      YAML.load(File.open(env_file)).each do |key, value|
+        ENV[key.to_s] = value
+      end if File.exists?(env_file)
+    end
+
+    config.session_store :cookie_store, key: '_meal_maid_session', secure: true, httponly: true, expire_after: 1.day
   end
 end

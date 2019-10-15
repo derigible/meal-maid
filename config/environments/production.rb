@@ -109,4 +109,12 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+
+
+  config.x.meal_maid.host = ENV['MEAL_MAID_HOST'] || 'www.meal-maid.com'
+  config.x.meal_maid.protocol = ENV['MEAL_MAID_PROTOCOL'] || 'https'
+  config.x.meal_maid.lock_after_attempts = 10
+  config.x.meal_maid.unlock_after_time = 15.minute
+  config.x.meal_maid.expire_session_after_time = 1.day
+  config.x.meal_maid.remember_me_expire_session_after_time = 1.month
 end

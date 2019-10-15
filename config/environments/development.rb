@@ -28,6 +28,8 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
+  config.hosts << "web.meal-maid.docker"
+
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
@@ -59,4 +61,12 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   # config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+  config.x.meal_maid.host = ENV['MEAL_MAID_HOST'] || 'localhost:8081'
+  config.x.meal_maid.protocol = ENV['MEAL_MAID_PROTOCOL'] || 'http'
+  config.x.meal_maid.lock_after_attempts = 100
+  config.x.meal_maid.unlock_after_time = 1.minute
+  config.x.meal_maid.expire_session_after_time = 1.year
+  config.x.meal_maid.remember_me_expire_session_after_time = 1.month
+  config.session_store :cookie_store, key: '_meal_maid_session', httponly: true, expire_after: 1.day
 end

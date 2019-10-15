@@ -1,10 +1,10 @@
 version: '2'
 
 services:
-  api: &API
+  web: &WEB
     build:
       context: .
-      dockerfile: docker/Dockerfile
+      dockerfile: Dockerfile
     environment: &WEB_ENV
       RAILS_ENV: development
     links:
@@ -17,7 +17,7 @@ services:
       - default
 
   postgres:
-    image: postgres:9.6.1
+    image: postgres:11
     logging:
       options:
         max-file: '5'
@@ -26,8 +26,8 @@ services:
   pgweb:
     image: sosedoff/pgweb
     command: [
-      /usr/bin/pgweb, --bind=0.0.0.0, --ssl=disable, --db=quiz_api_development,
-      --host=postgres, --user=postgres, --pass=quiz_api_postgres_password
+      /usr/bin/pgweb, --bind=0.0.0.0, --ssl=disable, --db=meal_maid_development,
+      --host=postgres, --user=postgres, --pass=meal_maid_postgres_password
     ]
     links:
       - postgres
