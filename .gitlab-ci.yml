@@ -1,3 +1,14 @@
+services:
+  - postgres:latest
+
+variables:
+  POSTGRES_DB: test_db
+  POSTGRES_USER: runner
+  POSTGRES_PASSWORD: ""
+
+before_script:
+  - cp config/database.yml.gitlab config/database.yml
+
 test:
   stage: test
   script:
