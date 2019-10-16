@@ -30,9 +30,13 @@ gem 'omniauth-identity'
 
 gem 'rack-cors', require: 'rack/cors'
 
+gem 'graphql'
+gem 'graphql-batch'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  gem 'graphiql-rails'
   gem 'listen'
   gem 'rb-readline'
   gem 'rspec-rails', '~> 4.0.0.beta2'
