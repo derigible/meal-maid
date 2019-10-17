@@ -2,6 +2,8 @@
 
 module Types
   class RecipeType < Types::BaseObject
+    global_id_field :id
+
     description 'A recipe.'
 
     field :title, String, null: true
@@ -15,12 +17,10 @@ module Types
       null: true,
       description: 'The ingredients in the recipe.'
     )
-    field :account, Types::AccountType, null: true do
-      argument :id, ID, required: true
-    end
+    field :account, Types::AccountType, null: true
 
-    def account(id:)
-      RecordLoader.for(Account).load(id)
+    def account
+      AssociationLoader.for(Recipe, :account).load(obj)
     end
 
     def ingredients_connection

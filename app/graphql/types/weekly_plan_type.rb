@@ -2,6 +2,8 @@
 
 module Types
   class WeeklyPlanType < Types::BaseObject
+    global_id_field :id
+
     description 'The weekly meal plan. A null value means that day\'s timeslot has no planned recipe.'
 
     %i[
@@ -15,7 +17,7 @@ module Types
     ].each do |time_slot|
       field(time_slot, Types::RecipeType, null: true)
       define_method(time_slot) do
-        AssociationLoader.for(WeeklyPlan, time_slot).load(object)
+        Loaders::AssociationLoader.for(WeeklyPlan, time_slot).load(object)
       end
     end
 
@@ -28,12 +30,12 @@ module Types
       description: 'The ingredients planned for the week'
     )
 
-    def planned_items
-      AssociationLoader.for(WeeklyPlan, :planned_items).load(object)
+    def planned_items_connection
+      Loaders::AssociationLoader.for(WeeklyPlan, :planned_items).load(object)
     end
 
     def account
-      AssociationLoader.for(WeeklyPlan, :account).load(object)
+      Loaders::AssociationLoader.for(WeeklyPlan, :account).load(object)
     end
   end
 end

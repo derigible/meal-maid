@@ -3,6 +3,7 @@
 class MealMaidSchema < GraphQL::Schema
   use GraphQL::Execution::Interpreter
   use GraphQL::Analysis::AST
+  use GraphQL::Batch
 
   mutation(Types::MutationType)
   query(Types::QueryType)

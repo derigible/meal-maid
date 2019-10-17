@@ -2,28 +2,22 @@
 
 module Types
   class PlannedItemType < Types::BaseObject
-    field :weekly_plan, Types::WeeklyPlanType, null: true do
-      argument :id, ID, required: true
+    global_id_field :id
+
+    field :weekly_plan, Types::WeeklyPlanType, null: true
+    field :ingredient, Types::RecipeItemType, null: true
+    field :inventory_item, Types::InventoryItemType, null: true
+
+    def weekly_plan
+      AssociationLoader.for(PlannedItem, :weekly_plan).load(obj)
     end
 
-    field :ingredient, Types::RecipeItemType, null: true do
-      argument :id, ID, required: true
+    def ingredient
+      AssociationLoader.for(PlannedItem, :recipe_item).load(obj)
     end
 
-    field :inventory_item, Types::InventoryItemType, null: true do
-      argument :id, ID, required: true
-    end
-
-    def weekly_plan(id:)
-      RecordLoader.for(WeeklyPlan).load(id)
-    end
-
-    def ingredient(id:)
-      RecordLoader.for(RecipeItem).load(id)
-    end
-
-    def inventory_item(id:)
-      RecordLoader.for(InventoryItem).load(id)
+    def inventory_item
+      AssociationLoader.for(PlannedItem, :inventory_item).load(obj)
     end
   end
 end

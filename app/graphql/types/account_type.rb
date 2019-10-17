@@ -2,6 +2,8 @@
 
 module Types
   class AccountType < Types::BaseObject
+    global_id_field :id
+
     description 'The account under which the user interacts. Basically a shell to capture the user\'s data.'
 
     field :inventory_items_connection, Types::InventoryItemType.connection_type, null: false

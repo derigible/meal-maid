@@ -79,6 +79,8 @@ class PasswordLogin < OmniAuth::Identity::Models::ActiveRecord
   end
 
   def send_login_confirmation
+    return if confirmed_at.present?
+
     update!(confirmation_sent_at: Time.zone.now)
     reload
     UserMailer.with(user: self, url: confirmation_url).welcome_email.deliver_now

@@ -6,17 +6,19 @@ module Types
 
     add_field GraphQL::Types::Relay::NodeField
 
-    field :weekly_plan, Types::WeeklyPlanType, null: true do
-      argument :id, ID, required: true
-    end
-    def weekly_plan(id:)
-      RecordLoader.for(WeeklyPlan).load(id)
+    field :account, Types::AccountType, null: true
+
+    delegate :account, to: :current_user
+
+    field :weekly_plans, [Types::WeeklyPlanType], description: 'All available weeklyplans', null: true do
+      argument :id, ID, required: false, prepare: GraphqlHelpers.relay_or_legacy_id_prepare_func('WeeklyPlan')
     end
 
-    field :weekly_plans, [Types::WeeklyPlanType], description: 'All available weeklyplans', null: true
+    def weekly_plans(id: nil)
+      scope = current_user.account.weekly_plans
+      return scope unless id
 
-    def weekly_plans
-      current_user.account.weekly_plans
+      scope.where(id: id)
     end
   end
 end

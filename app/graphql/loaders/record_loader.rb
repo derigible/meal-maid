@@ -2,7 +2,7 @@
 
 # from: https://github.com/Shopify/graphql-batch/blob/master/examples/record_loader.rb
 
-class RecordLoader < GraphQL::Batch::Loader
+class Loaders::RecordLoader < GraphQL::Batch::Loader
   def initialize(model, column: model.primary_key, where: nil)
     @model = model
     @column = column.to_s
