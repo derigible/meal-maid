@@ -3,6 +3,6 @@ class Addweekandyeartoweeklyplan < ActiveRecord::Migration[6.0]
     add_column :weekly_plans, :week_number, :integer
     add_column :weekly_plans, :year, :integer
 
-    add_index :weekly_plans, [:week_number, :year]
+    add_index :weekly_plans, [:week_number, :year, :account_id], unique: true
   end
 end

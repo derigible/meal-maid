@@ -1,27 +1,67 @@
 # frozen_string_literal: true
 
-TIME_SLOTS = %i[
-  monday_morning monday_midday monday_evening
-  tuesday_morning tuesday_midday tuesday_evening
-  wednesday_morning wednesday_midday wednesday_evening
-  thursday_morning thursday_midday thursday_evening
-  friday_morning friday_midday friday_evening
-  saturday_morning saturday_midday saturday_evening
-  sunday_morning sunday_midday sunday_evening
-].freeze
-
 class WeeklyPlan < ApplicationRecord
+  TIME_SLOTS = %i[
+    monday_morning monday_midday monday_evening
+    tuesday_morning tuesday_midday tuesday_evening
+    wednesday_morning wednesday_midday wednesday_evening
+    thursday_morning thursday_midday thursday_evening
+    friday_morning friday_midday friday_evening
+    saturday_morning saturday_midday saturday_evening
+    sunday_morning sunday_midday sunday_evening
+  ].freeze
+
   belongs_to :account
   TIME_SLOTS.each do |time_slot|
     belongs_to time_slot.to_sym, class_name: 'Recipe', inverse_of: time_slot.to_s.pluralize.to_sym, optional: true
   end
   has_many :planned_items, dependent: :destroy, inverse_of: :weekly_plan
 
+  validate :week_and_year, on: :create
+  validate :week_and_year_unchanged, on: :update
+
   after_save :update_planned_items
 
   delegate :access?, to: :account
 
   private
+
+  def week_and_year
+    current_week, current_year = normalize_week_and_year
+    return if past?(current_week, current_year)
+    return if duplicate?
+
+    too_far_in_future?
+  end
+
+  def past?(cyear, cweek)
+    errors.add(:year, "Year #{year} in the past.") and return true if cyear > year
+    errors.add(:week_number, "Week #{week_number} in the past.") and return true if cyear == year && week_number < cweek
+  end
+
+  def normalize_week_and_year
+    now = Time.zone.now
+    current_week = now.to_date.cweek
+    current_year = now.year
+    self.week_number ||= current_week
+    year || current_year
+    [current_week, current_year]
+  end
+
+  def duplicate?
+    duplicated = self.where(week_number: week_number, year: year).exists?
+    errors.add(:week_number, "Week #{week} already exists.") and return true if duplicated
+  end
+
+  def too_far_in_future?(cweek, cyear)
+    too_far if year > cyear && cweek > 48 && week > 1 || week > cweek + 5
+    errors.add(:week_number, "Week #{week} with year #{year} too far in future.") if too_far
+  end
+
+  def week_and_year_unchanged
+    errors.add(:week_number, 'Week changed!') if week_number_changed?
+    errors.add(:year, 'Year changed!') if year_changed?
+  end
 
   def update_inventory
     # TODO: in a background job update the inventory (probably stored as jsonb on account)

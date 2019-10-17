@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # Copyright (C) 2018 - present Instructure, Inc.
 #
@@ -36,9 +38,9 @@ module GraphqlHelpers
     def relay_or_legacy_ids_prepare_func(expected_type)
       proc do |relay_or_legacy_ids, _ctx|
         begin
-          relay_or_legacy_ids.map { |relay_or_legacy_id, _ctx|
+          relay_or_legacy_ids.map do |relay_or_legacy_id, _ctx|
             parse_relay_or_legacy_id(relay_or_legacy_id, expected_type)
-          }
+          end
         rescue InvalidIDError => e
           GraphQL::ExecutionError.new(e.message)
         end
@@ -50,11 +52,9 @@ module GraphqlHelpers
         relay_or_legacy_id
       else
         type, id = GraphQL::Schema::UniqueWithinType.decode(relay_or_legacy_id)
-        if type != expected_type || id.nil?
-          raise InvalidIDError.new("expected an id for #{expected_type}")
-        else
-          id
-        end
+        raise InvalidIDError.new("expected an id for #{expected_type}") if type != expected_type || id.nil?
+
+        id
       end
     end
 

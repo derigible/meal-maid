@@ -173,7 +173,7 @@ ActiveRecord::Schema.define(version: 2019_10_17_192318) do
     t.index ["wednesday_evening_id"], name: "index_weekly_plans_on_wednesday_evening_id"
     t.index ["wednesday_midday_id"], name: "index_weekly_plans_on_wednesday_midday_id"
     t.index ["wednesday_morning_id"], name: "index_weekly_plans_on_wednesday_morning_id"
-    t.index ["week_number", "year"], name: "index_weekly_plans_on_week_number_and_year"
+    t.index ["week_number", "year", "account_id"], name: "index_weekly_plans_on_week_number_and_year_and_account_id", unique: true
   end
 
   add_foreign_key "account_invitations", "accounts"
