@@ -12,7 +12,7 @@ class GraphqlController < ApplicationController
       current_user: current_user
     }
     result = nil
-    Timeout.timeout(overall_timeout) do
+    Timeout.timeout(300) do
       result = MealMaidSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     end
     render json: result

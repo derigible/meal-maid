@@ -12,5 +12,11 @@ module Types
     def weekly_plan(id:)
       RecordLoader.for(WeeklyPlan).load(id)
     end
+
+    field :weekly_plans, [Types::WeeklyPlanType], description: 'All available weeklyplans', null: true
+
+    def weekly_plans
+      current_user.account.weekly_plans
+    end
   end
 end

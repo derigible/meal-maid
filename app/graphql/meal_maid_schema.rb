@@ -14,7 +14,7 @@ class MealMaidSchema < GraphQL::Schema
   def self.object_from_id(id, query_ctx)
     type_name, item_id = GraphQL::Schema::UniqueWithinType.decode(id)
     RecordLoader.for(type_name.constantize).load(item_id).then do |record|
-      record.access?(query_ctx[:current_user])
+      record&.access?(query_ctx[:current_user])
     end
   end
 

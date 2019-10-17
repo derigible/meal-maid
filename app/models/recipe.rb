@@ -14,7 +14,7 @@ class Recipe < ApplicationRecord
     sunday_morning sunday_midday sunday_evening
   ].each do |time_slot|
     has_many(
-      time_slot.to_s.pluralize,
+      time_slot.to_s.pluralize.to_sym,
       inverse_of: time_slot,
       class_name: 'WeeklyPlan',
       primary_key: "#{time_slot}_id",

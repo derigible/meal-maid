@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_16_170243) do
+ActiveRecord::Schema.define(version: 2019_10_17_192318) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(version: 2019_10_16_170243) do
     t.bigint "weekly_plan_id", null: false
     t.bigint "recipe_item_id", null: false
     t.bigint "inventory_item_id"
+    t.string "time_slot"
     t.index ["inventory_item_id"], name: "index_planned_items_on_inventory_item_id"
     t.index ["recipe_item_id"], name: "index_planned_items_on_recipe_item_id"
     t.index ["weekly_plan_id"], name: "index_planned_items_on_weekly_plan_id"
@@ -148,6 +149,8 @@ ActiveRecord::Schema.define(version: 2019_10_16_170243) do
     t.bigint "sunday_midday_id"
     t.bigint "sunday_evening_id"
     t.bigint "account_id", null: false
+    t.integer "week_number"
+    t.integer "year"
     t.index ["account_id"], name: "index_weekly_plans_on_account_id"
     t.index ["friday_evening_id"], name: "index_weekly_plans_on_friday_evening_id"
     t.index ["friday_midday_id"], name: "index_weekly_plans_on_friday_midday_id"
@@ -170,6 +173,7 @@ ActiveRecord::Schema.define(version: 2019_10_16_170243) do
     t.index ["wednesday_evening_id"], name: "index_weekly_plans_on_wednesday_evening_id"
     t.index ["wednesday_midday_id"], name: "index_weekly_plans_on_wednesday_midday_id"
     t.index ["wednesday_morning_id"], name: "index_weekly_plans_on_wednesday_morning_id"
+    t.index ["week_number", "year"], name: "index_weekly_plans_on_week_number_and_year"
   end
 
   add_foreign_key "account_invitations", "accounts"

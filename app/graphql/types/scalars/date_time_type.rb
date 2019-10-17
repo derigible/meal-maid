@@ -18,7 +18,7 @@
 # with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-class Types::DateTimeType < Types::BaseScalar
+class Types::Scalars::DateTimeType < Types::Scalars::BaseScalar
   graphql_name 'DateTime'
   description 'an ISO8601 formatted time string'
 
