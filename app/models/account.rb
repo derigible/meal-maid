@@ -2,4 +2,8 @@
 
 class Account < ApplicationRecord
   has_many :users, inverse_of: :account, dependent: :destroy
+
+  def access?(user)
+    users.include?(user)
+  end
 end

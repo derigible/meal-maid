@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Recipe < ApplicationRecord
   has_many :recipe_items, inverse_of: :recipe, dependent: :destroy
   belongs_to :account
@@ -19,4 +21,6 @@ class Recipe < ApplicationRecord
       dependent: :nullify
     )
   end
+
+  delegate :access?, to: :account
 end

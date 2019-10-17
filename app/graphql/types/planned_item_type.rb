@@ -3,15 +3,15 @@
 module Types
   class PlannedItemType < Types::BaseObject
     field :weekly_plan, Types::WeeklyPlanType, null: true do
-      argument :id, ID, required: True
+      argument :id, ID, required: true
     end
 
     field :ingredient, Types::RecipeItemType, null: true do
-      argument :id, ID, required: True
+      argument :id, ID, required: true
     end
 
     field :inventory_item, Types::InventoryItemType, null: true do
-      argument :id, ID, required: True
+      argument :id, ID, required: true
     end
 
     def weekly_plan(id:)

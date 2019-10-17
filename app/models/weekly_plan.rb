@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class WeeklyPlan < ApplicationRecord
   belongs_to :account
 
@@ -12,4 +14,6 @@ class WeeklyPlan < ApplicationRecord
   ].each do |time_slot|
     belongs_to :recipe, foreign_key: time_slot, inverse_of: time_slot
   end
+
+  delegate :access?, to: :account
 end

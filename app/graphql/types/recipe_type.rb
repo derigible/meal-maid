@@ -9,9 +9,14 @@ module Types
     field :rating, Integer, null: true
     field :directions, String, null: true
     field :notes, String, null: true
-    field :ingredients_connection, Types::RecipeItemType.connection_type, null: true, description: 'The ingredients in the recipe.'
+    field(
+      :ingredients_connection,
+      Types::RecipeItemType.connection_type,
+      null: true,
+      description: 'The ingredients in the recipe.'
+    )
     field :account, Types::AccountType, null: true do
-      argument :id, ID, required: True
+      argument :id, ID, required: true
     end
 
     def account(id:)

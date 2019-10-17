@@ -4,6 +4,10 @@ module Types
   class WeeklyPlanType < Types::BaseObject
     description 'The weekly meal plan. A null value means that day\'s timeslot has no planned recipe.'
 
+    def load_recipe(id:)
+      RecordLoader.for(Recipe).load(id)
+    end
+
     %i[
       monday_morning monday_midday monday_evening
       tuesday_morning tuesday_midday tuesday_evening
@@ -20,7 +24,7 @@ module Types
     end
 
     field :account, Types::AccountType, null: false, description: 'The account the meal plan is under.' do
-      argument :id, ID, required: True
+      argument :id, ID, required: true
     end
 
     field(
@@ -36,10 +40,6 @@ module Types
 
     def account(id:)
       RecordLoader.for(Account).load(id)
-    end
-
-    def load_recipe(id:)
-      RecordLoader.for(Recipe).load(id)
     end
   end
 end

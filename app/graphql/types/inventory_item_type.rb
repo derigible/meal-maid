@@ -9,11 +9,11 @@ module Types
     field :updated_at, Types::DateTimeType, null: true
 
     field :item, Types::ItemType, null: true do
-      argument :id, ID, required: True
+      argument :id, ID, required: true
     end
 
     field :account, Types::AccountType, null: true do
-      argument :id, ID, required: True
+      argument :id, ID, required: true
     end
 
     def account(id:)
