@@ -21,7 +21,8 @@ class WeeklyPlan < ApplicationRecord
   validate :week_and_year_unchanged, on: :update
   validates :week_number, uniqueness: { scope: %i[year account] }
 
-  after_save :update_planned_items
+  # TODO: add this back in once we do inventory implementations
+  # after_save :update_planned_items
 
   delegate :access?, to: :account
 

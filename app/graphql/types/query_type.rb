@@ -25,6 +25,13 @@ module Types
       argument :id, ID, required: false, prepare: GraphqlHelpers.relay_or_legacy_id_prepare_func('Recipe')
     end
 
+    field(
+      :user,
+      Types::UserType,
+      description: 'The user that is currently logged in.',
+      null: false
+    )
+
     def weekly_plans(id: nil)
       scope = current_user.account.weekly_plans
       return scope unless id
@@ -37,6 +44,10 @@ module Types
       return scope unless id
 
       scope.where(id: id)
+    end
+
+    def user
+      current_user
     end
   end
 end

@@ -28,6 +28,7 @@ class MealMaidSchema < GraphQL::Schema
     when PlannedItem then Types::PlannedItemType
     when RecipeItem then Types::RecipeItemType
     when Recipe then Types::RecipeType
+    when User then Types::UserType
     when WeeklyPlan then Types::WeeklyPlanType
     end
   end
