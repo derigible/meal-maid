@@ -5,8 +5,6 @@ class Mutations::BaseMutation < GraphQL::Schema::RelayClassicMutation
   field_class Types::BaseField
   input_object_class Types::BaseInputObject
 
-  field :errors, [String], null: false
-
   def current_user
     context[:current_user]
   end

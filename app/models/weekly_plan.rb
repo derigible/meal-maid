@@ -19,6 +19,7 @@ class WeeklyPlan < ApplicationRecord
 
   validate :week_and_year, on: :create
   validate :week_and_year_unchanged, on: :update
+  validates :week_number, uniqueness: { scope: %i[year account] }
 
   after_save :update_planned_items
 
@@ -29,12 +30,16 @@ class WeeklyPlan < ApplicationRecord
   def week_and_year
     current_week, current_year = normalize_week_and_year
     return if past?(current_week, current_year)
-    return if duplicate?
+    return if invalid_week?
 
-    too_far_in_future?
+    too_far_in_future?(current_week, current_year)
   end
 
-  def past?(cyear, cweek)
+  def invalid_week?
+    errors.add(:week_number, "Week #{week_number} impossible.") and return true if week_number > 52 || week_number < 1
+  end
+
+  def past?(cweek, cyear)
     errors.add(:year, "Year #{year} in the past.") and return true if cyear > year
     errors.add(:week_number, "Week #{week_number} in the past.") and return true if cyear == year && week_number < cweek
   end
@@ -44,18 +49,13 @@ class WeeklyPlan < ApplicationRecord
     current_week = now.to_date.cweek
     current_year = now.year
     self.week_number ||= current_week
-    year || current_year
+    self.year ||= current_year
     [current_week, current_year]
   end
 
-  def duplicate?
-    duplicated = self.where(week_number: week_number, year: year).exists?
-    errors.add(:week_number, "Week #{week} already exists.") and return true if duplicated
-  end
-
   def too_far_in_future?(cweek, cyear)
-    too_far if year > cyear && cweek > 48 && week > 1 || week > cweek + 5
-    errors.add(:week_number, "Week #{week} with year #{year} too far in future.") if too_far
+    too_far = (year > cyear && cweek > 48 && (week_number + 52 - cweek) > 5) || week_number > cweek + 5
+    errors.add(:week_number, "Week #{week_number} with year #{year} too far in future.") if too_far
   end
 
   def week_and_year_unchanged

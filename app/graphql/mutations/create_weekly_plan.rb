@@ -9,6 +9,7 @@ class Mutations::CreateWeeklyPlan < Mutations::BaseMutation
   end
 
   field :weekly_plan, Types::WeeklyPlanType, null: true
+  field :errors, [String], null: false
 
   def resolve(**time_slots)
     weekly_plan = account.weekly_plans.new(added_time_slots(time_slots))

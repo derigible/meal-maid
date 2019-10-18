@@ -19,7 +19,7 @@ items = []
 %w(corn beans rice tortillas salsa cheese).each do |item|
   i = a.items.create! name: item
   items << i
-  ii = a.inventory_items.create! amount: (1..100).to_a.sample, expiration: 1.week.from_now, item: i
+  ii = a.inventory_items.create! amount: rand(1..100), expiration: 1.week.from_now, item: i
 end
 
 recipes = []
@@ -27,13 +27,13 @@ recipes = []
   recipe = a.recipes.create!(
     title: "Recipe #{i}",
     time: i,
-    rating: (0..6).to_a.sample,
+    rating: rand(1..5),
     directions: 'Simple directions',
     notes: 'This is awesome!',
 
   )
   items.sample(3).each do |item|
-    recipe.recipe_items.create!(amount: (0..20).to_a.sample, item: item)
+    recipe.recipe_items.create!(amount: rand(0..20), item: item)
   end
   recipes << recipe
 end
