@@ -120,8 +120,8 @@ export default function Page (
       <Responsive
         match="media"
         query={{
-          small: { maxWidth: 600 },
-          large: { minWidth: 600}
+          small: { maxWidth: 900 },
+          large: { minWidth: 900}
         }}
       >
         {(props, matches) => {

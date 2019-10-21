@@ -46,18 +46,83 @@ const user = {
 
 const notifications = []
 
-const userInfoQuery = gql`
+const initialQuery = gql`
   {
     user {
       displayName
       email
       preferredName
     }
+    currentWeeklyPlan {
+      mondayMorning {
+        title
+      }
+      mondayMidday {
+        title
+      }
+      mondayEvening {
+        title
+      }
+      tuesdayMorning {
+        title
+      }
+      tuesdayMidday {
+        title
+      }
+      tuesdayEvening {
+        title
+      }
+      wednesdayMorning {
+        title
+      }
+      wednesdayMidday {
+        title
+      }
+      wednesdayEvening {
+        title
+      }
+      thursdayMorning {
+        title
+      }
+      thursdayMidday {
+        title
+      }
+      thursdayEvening {
+        title
+      }
+      fridayMorning {
+        title
+      }
+      fridayMidday {
+        title
+      }
+      fridayEvening {
+        title
+      }
+      saturdayMorning {
+        title
+      }
+      saturdayMidday {
+        title
+      }
+      saturdayEvening {
+        title
+      }
+      sundayMorning {
+        title
+      }
+      sundayMidday {
+        title
+      }
+      sundayEvening {
+        title
+      }
+    }
   }
 `
 
 function LoginCheck ({View}) {
-  const { loading, error, data } = useQuery(userInfoQuery);
+  const { loading, error, data } = useQuery(initialQuery);
 
   if (loading) return <Spinner renderTitle="Loading" size="large" margin="0 0 0 medium" />;
   if (error){
@@ -68,7 +133,7 @@ function LoginCheck ({View}) {
     return <p>Something has gone wrong. Reload the page, clear cookies and cache, and try again.</p>
   }
 
-  return <View user={data.user} notifications={notifications} />
+  return <View user={data.user} notifications={notifications} weeklyPlan={data.currentWeeklyPlan} />
 }
 
 if (mountPoint !== null) {

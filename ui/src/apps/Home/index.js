@@ -6,9 +6,11 @@ import { Grid } from '@instructure/ui-layout'
 import { View } from '@instructure/ui-layout'
 import { Billboard } from '@instructure/ui-billboard'
 import { capitalizeFirstLetter } from '@instructure/ui-utils'
-import { IconRubricLine, IconComposeLine } from '@instructure/ui-icons'
 
 import Page from '../../components/Page'
+import WeeklyPlan from './WeeklyPlan'
+
+import type { WeeklyPlanType } from '../../types'
 
 import type { UserType } from '../../components/User'
 import type { NotificationType } from '../../components/User'
@@ -35,7 +37,8 @@ function ActionCard ({type, Icon}: {type: string, Icon: any}) {
 }
 
 export default function Home (
-  {user, notifications} :  {user: UserType, notifications: Array<NotificationType>}
+  {user, notifications, weeklyPlan} :
+  {user: UserType, notifications: Array<NotificationType>, weeklyPlan: WeeklyPlanType}
 ) {
   return (
     <Page
@@ -43,8 +46,7 @@ export default function Home (
       user={user}
       notifications={notifications}
     >
-      <ActionCard type="todos" Icon={IconRubricLine}/>
-      <ActionCard type="notes" Icon={IconComposeLine}/>
+      <WeeklyPlan weeklyPlan={weeklyPlan}/>
     </Page>
   )
 }
