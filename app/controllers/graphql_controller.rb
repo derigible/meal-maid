@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class GraphqlController < ApplicationController
-  before_action :authenticate_user!
+  prepend_before_action :authenticate_user!
+  after_action :set_csrf_cookie
 
   # rubocop:disable Metrics/AbcSize
   def execute

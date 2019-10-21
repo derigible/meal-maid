@@ -46,7 +46,7 @@ function LargePageNavigation (
           }}
         />
         <Navigation.Item
-          icon={<Avatar name={user.display_name} size="x-small"/>}
+          icon={<Avatar name={user.displayName} size="x-small"/>}
           label="Profile"
           href="#!user"
           selected={pageName == 'user'}
@@ -95,7 +95,7 @@ function SmallPageNavigation (
           margin="x-small"
         >
           <Avatar
-            name={user.display_name}
+            name={user.displayName}
             size="x-small"
           />
         </Button>

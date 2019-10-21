@@ -16,12 +16,32 @@ const mountPoint = document.getElementById('app')
 
 const router = configureRouter()
 
-const client = new ApolloClient();
+function readCookie(name) {
+  var nameEQ = name + "=";
+  var ca = document.cookie.split(";");
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) === " ") c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
+  }
+  return null;
+}
+
+const client = new ApolloClient({
+  request: (operation) => {
+    const token = localStorage.getItem('token')
+    operation.setContext({
+      headers: {
+        'X-CSRF-TOKEN': readCookie("X-CSRF-Token")
+      }
+    })
+  }
+});
 
 const user = {
-  display_name: 'Marc Phillips',
+  displayName: 'Marc Phillips',
   email: 'mphillips@outlook.com',
-  preferred_name: 'derigible'
+  preferredName: 'derigible'
 }
 
 const notifications = []
@@ -29,9 +49,9 @@ const notifications = []
 const userInfoQuery = gql`
   {
     user {
-      display_name
+      displayName
       email
-      preferred_name
+      preferredName
     }
   }
 `
@@ -41,8 +61,11 @@ function LoginCheck ({View}) {
 
   if (loading) return <Spinner renderTitle="Loading" size="large" margin="0 0 0 medium" />;
   if (error){
-    console.log(error) // eslint-disable-line
-    return <p>Error :(</p>;
+    if (new RegExp('Received status code 401').test(error.toString())) {
+      setTimeout(() => window.location = '/auth/identity', 1000)
+      return <p>User not authenitcated. Being redirected to login in 1 second...</p>;
+    }
+    return <p>Something has gone wrong. Reload the page, clear cookies and cache, and try again.</p>
   }
 
   return <View user={data.user} notifications={notifications} />

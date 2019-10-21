@@ -10,9 +10,9 @@ import { IconSaveLine } from '@instructure/ui-icons'
 import StandardEdit from '../StandardEdit'
 
 export type UserType = {
-  display_name: string,
+  displayName: string,
   email: string,
-  preferred_name: string
+  preferredName: string
 }
 type NotificationData = {
   type?: string,
@@ -34,12 +34,12 @@ type ComponentActionType = {
 
 function reducer(state: UserType, action: ComponentActionType) {
   switch (action.type) {
-    case 'display_name':
-      return {...state, display_name: action.payload}
+    case 'displayName':
+      return {...state, displayName: action.payload}
     case 'email':
       return {...state, email: action.payload}
-    case 'preferred_name':
-      return {...state, preferred_name: action.payload}
+    case 'preferredName':
+      return {...state, preferredName: action.payload}
     default:
       throw new Error();
   }
@@ -56,15 +56,15 @@ export default function User ({user} : {user: UserType}) {
           <Grid.Col>
             <StandardEdit
               label="Display Name"
-              value={userObj.display_name}
-              onChange={(e) => {setUserChanged(true); setUserChanges({type: 'display_name', payload: e.target.value})}}
+              value={userObj.displayName}
+              onChange={(e) => {setUserChanged(true); setUserChanges({type: 'displayName', payload: e.target.value})}}
             />
           </Grid.Col>
           <Grid.Col>
             <StandardEdit
               label="Preferred Name"
-              value={userObj.preferred_name}
-              onChange={(e) => {setUserChanged(true); setUserChanges({type: 'preferred_name', payload: e.target.value})}}
+              value={userObj.preferredName}
+              onChange={(e) => {setUserChanged(true); setUserChanges({type: 'preferredName', payload: e.target.value})}}
             />
           </Grid.Col>
         </Grid.Row>

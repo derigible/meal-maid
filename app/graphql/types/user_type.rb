@@ -9,5 +9,9 @@ module Types
     field :display_name, String, null: true
     field :email, String, null: true
     field :preferred_name, String, null: true
+
+    def display_name
+      object.display_name || object.preferred_name
+    end
   end
 end
