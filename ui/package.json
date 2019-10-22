@@ -56,6 +56,7 @@
     "@instructure/ui-elements": "^6.14.0",
     "@instructure/ui-eslint-config": "^6.14.0",
     "@instructure/ui-forms": "^6.14.0",
+    "@instructure/ui-heading": "^6.14.0",
     "@instructure/ui-icons": "^6.14.0",
     "@instructure/ui-karma-config": "^6.14.0",
     "@instructure/ui-layout": "^6.14.0",

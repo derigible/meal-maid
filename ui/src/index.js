@@ -55,73 +55,94 @@ const initialQuery = gql`
     }
     currentWeeklyPlan {
       mondayMorning {
+        id
         title
       }
       mondayMidday {
+        id
         title
       }
       mondayEvening {
+        id
         title
       }
       tuesdayMorning {
+        id
         title
       }
       tuesdayMidday {
+        id
         title
       }
       tuesdayEvening {
+        id
         title
       }
       wednesdayMorning {
+        id
         title
       }
       wednesdayMidday {
+        id
         title
       }
       wednesdayEvening {
+        id
         title
       }
       thursdayMorning {
+        id
         title
       }
       thursdayMidday {
+        id
         title
       }
       thursdayEvening {
+        id
         title
       }
       fridayMorning {
+        id
         title
       }
       fridayMidday {
+        id
         title
       }
       fridayEvening {
+        id
         title
       }
       saturdayMorning {
+        id
         title
       }
       saturdayMidday {
+        id
         title
       }
       saturdayEvening {
+        id
         title
       }
       sundayMorning {
+        id
         title
       }
       sundayMidday {
+        id
         title
       }
       sundayEvening {
+        id
         title
       }
     }
   }
 `
 
-function LoginCheck ({View}) {
+function LoginCheck ({View, params}) {
   const { loading, error, data } = useQuery(initialQuery);
 
   if (loading) return <Spinner renderTitle="Loading" size="large" margin="0 0 0 medium" />;
@@ -133,16 +154,16 @@ function LoginCheck ({View}) {
     return <p>Something has gone wrong. Reload the page, clear cookies and cache, and try again.</p>
   }
 
-  return <View user={data.user} notifications={notifications} weeklyPlan={data.currentWeeklyPlan} />
+  return <View user={data.user} notifications={notifications} weeklyPlan={data.currentWeeklyPlan} {...params} />
 }
 
 if (mountPoint !== null) {
   router.on('route', async (_, routing) => {
-    const { view, app } = await routing
+    const { view, app, params = {} } = await routing
 
     ReactDOM.render(
       <ApolloProvider client={client}>
-        <LoginCheck View={view} />
+        <LoginCheck View={view} params={params} />
       </ApolloProvider>,
       mountPoint
     )
