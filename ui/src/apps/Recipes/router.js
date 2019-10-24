@@ -9,10 +9,10 @@ import Recipe from './Recipe'
 
 const router = Router()
   .use('/', ({resolve}) => {
-    resolve({view: Recipes, app: 'recipes'})
+    resolve({view: Recipes, pageName: 'recipes'})
   })
   .use('/:id', ({params, resolve}) => {
-    resolve({view: Recipe, app: 'recipes', params})
+    resolve({view: Recipe, pageName: 'recipe', params})
   })
 
 export default router

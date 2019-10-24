@@ -8,6 +8,8 @@ import { ApolloProvider, useQuery } from '@apollo/react-hooks'
 import { gql } from "apollo-boost";
 import { Spinner } from '@instructure/ui-elements'
 
+import Page from './components/Page'
+
 import configureRouter from './router'
 
 theme.use()
@@ -142,7 +144,7 @@ const initialQuery = gql`
   }
 `
 
-function LoginCheck ({View, params}) {
+function LoginCheck ({View, pageName, params}) {
   const { loading, error, data } = useQuery(initialQuery);
 
   if (loading) return <Spinner renderTitle="Loading" size="large" margin="0 0 0 medium" />;
@@ -154,16 +156,24 @@ function LoginCheck ({View, params}) {
     return <p>Something has gone wrong. Reload the page, clear cookies and cache, and try again.</p>
   }
 
-  return <View user={data.user} notifications={notifications} weeklyPlan={data.currentWeeklyPlan} {...params} />
+  return (
+    <Page
+      user={data.user}
+      notifications={notifications}
+      pageName={pageName}
+    >
+      <View weeklyPlan={data.currentWeeklyPlan} {...params} />
+    </Page>
+  )
 }
 
 if (mountPoint !== null) {
   router.on('route', async (_, routing) => {
-    const { view, app, params = {} } = await routing
+    const { view, pageName, params = {} } = await routing
 
     ReactDOM.render(
       <ApolloProvider client={client}>
-        <LoginCheck View={view} params={params} />
+        <LoginCheck View={view} params={params} pageName={pageName} />
       </ApolloProvider>,
       mountPoint
     )

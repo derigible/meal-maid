@@ -9,11 +9,11 @@ import { IconRubricLine } from '@instructure/ui-icons'
 import { IconInboxLine } from '@instructure/ui-icons'
 import { IconComposeLine } from '@instructure/ui-icons'
 import { IconHamburgerSolid } from '@instructure/ui-icons'
+import { IconAssignmentLine } from '@instructure/ui-icons'
 import { IconXLine } from '@instructure/ui-icons'
 import { ScreenReaderContent } from '@instructure/ui-a11y'
 import { Avatar, Heading } from '@instructure/ui-elements'
 import { Badge } from '@instructure/ui-elements'
-import { capitalizeFirstLetter } from '@instructure/ui-utils'
 import { Tray } from '@instructure/ui-overlays'
 import { Button } from '@instructure/ui-buttons'
 
@@ -33,7 +33,6 @@ function LargePageNavigation (
           expandedLabel: 'Minimize Navigation',
           minimizedLabel: 'Expand Navigation'
         }}
-        minimized={navOpen}
         onMinimized={() => setNavOpen(!navOpen)}
       >
         <Navigation.Item
@@ -58,6 +57,12 @@ function LargePageNavigation (
           href="#!user/inbox"
           selected={pageName == 'user/inbox'}
         /> */}
+        <Navigation.Item
+          icon={<IconAssignmentLine />}
+          label="Weekly Plans"
+          href="#!home"
+          selected={pageName == 'home'}
+        />
       </Navigation>
     </div>
   )
@@ -103,6 +108,9 @@ function SmallPageNavigation (
         <Button fluidWidth icon={<Badge count={notifications.length}><IconInboxLine /></Badge>} href="#!user/inbox" margin="x-small">
           Inbox
         </Button> */}
+        <Button fluidWidth icon={<IconAssignmentLine />} href="#!home" margin="x-small">
+          Weekly Plans
+        </Button>
       </View>
     </Tray>
   )
@@ -142,7 +150,7 @@ export default function Page (
               >
                 <View as="div" margin="medium small none medium">
                   <View as="div" margin="none none medium none">
-                    {pageHeader ? pageHeader : <PageHeader pageName={capitalizeFirstLetter(pageName)} />}
+                    {pageHeader ? pageHeader : <PageHeader pageName={pageName} />}
                   </View>
                   {children}
                 </View>
@@ -174,7 +182,7 @@ export default function Page (
                     </Button>
                   </Flex.Item>
                   <Flex.Item shrink grow>
-                    {pageHeader ? pageHeader : <PageHeader pageName={capitalizeFirstLetter(pageName)} size="small"/>}
+                    {pageHeader ? pageHeader : <PageHeader pageName={pageName} size="small"/>}
                   </Flex.Item>
                 </Flex>
                 {children}

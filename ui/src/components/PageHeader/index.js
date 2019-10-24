@@ -5,6 +5,7 @@ import React from 'react'
 import { Heading } from '@instructure/ui-elements'
 import { Breadcrumb } from '@instructure/ui-breadcrumb'
 import { View } from '@instructure/ui-layout'
+import { capitalizeFirstLetter } from '@instructure/ui-utils'
 
 import type { BreadCrumbType } from './type'
 
@@ -14,7 +15,7 @@ export default function PageHeader(
   if (pageName) {
     return (
       <Heading level="h1" border="bottom">
-        {pageName}
+        {pageName.split(' ').map(s => capitalizeFirstLetter(s)).join(' ')}
       </Heading>
     )
   } else if (breadCrumbs && breadCrumbs.length > 0) {

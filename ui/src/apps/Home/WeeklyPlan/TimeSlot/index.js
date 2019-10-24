@@ -27,7 +27,7 @@ export default function TimeSlot ({recipe, isPast} : {recipe?: RecipeType, isPas
         )
         : (
           isPast
-            ? <View><Text color="secondary">--</Text></View>
+            ? <View margin="medium" as="div"><Text color="secondary">--</Text></View>
             : <Button icon={IconAddLine} variant="link" margin="x-small">Add Recipe</Button>
         )
       }

@@ -7,13 +7,9 @@ import { View } from '@instructure/ui-layout'
 import { Billboard } from '@instructure/ui-billboard'
 import { capitalizeFirstLetter } from '@instructure/ui-utils'
 
-import Page from '../../components/Page'
 import WeeklyPlan from './WeeklyPlan'
 
 import type { WeeklyPlanType } from '../../types'
-
-import type { UserType } from '../../components/User'
-import type { NotificationType } from '../../components/User'
 
 function ActionCard ({type, Icon}: {type: string, Icon: any}) {
   return (
@@ -36,17 +32,6 @@ function ActionCard ({type, Icon}: {type: string, Icon: any}) {
   )
 }
 
-export default function Home (
-  {user, notifications, weeklyPlan} :
-  {user: UserType, notifications: Array<NotificationType>, weeklyPlan: WeeklyPlanType}
-) {
-  return (
-    <Page
-      pageName="home"
-      user={user}
-      notifications={notifications}
-    >
-      <WeeklyPlan weeklyPlan={weeklyPlan}/>
-    </Page>
-  )
+export default function Home ({weeklyPlan} : {weeklyPlan: WeeklyPlanType}) {
+  return <WeeklyPlan weeklyPlan={weeklyPlan}/>
 }

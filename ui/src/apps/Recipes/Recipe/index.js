@@ -24,7 +24,9 @@ const recipeQuery = gql`
   }
 `
 
-export default function Recipe ({id} : {id: string}) {
+export default function Recipe (
+  {id} : {id: string}
+) {
   const { loading, error, data } = useQuery(recipeQuery, {
     variables: { id }
   });
@@ -33,7 +35,7 @@ export default function Recipe ({id} : {id: string}) {
   if (error){
     if (new RegExp('Received status code 401').test(error.toString())) {
       setTimeout(() => window.location = '/auth/identity', 1000)
-      return <p>User not authenitcated. Being redirected to login in 1 second...</p>;
+      return <p>User not authenticated. Being redirected to login in 1 second...</p>;
     }
     return <p>Something has gone wrong. Reload the page, clear cookies and cache, and try again.</p>
   }

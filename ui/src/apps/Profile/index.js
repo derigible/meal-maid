@@ -2,7 +2,6 @@
 
 import React from 'react'
 
-import { IconUserLine, IconGroupLine } from '@instructure/ui-icons'
 import { View } from '@instructure/ui-layout'
 import { Tabs } from '@instructure/ui-tabs'
 
@@ -20,11 +19,6 @@ const tabs = {
 // eslint-disable-next-line no-undef
 type TabTypes = $Keys<typeof tabs>;
 
-const breadCrumbs = (tab: number) => {
-  const crumbs = [{href: '#!user', linkText: 'User', icon: IconUserLine}]
-  return crumbs
-}
-
 export default function Profile (
   {user, notifications, tab = 'user_info'} : {user: UserType, notifications: Array<NotificationType>, tab?: TabTypes}
 ) {
@@ -34,27 +28,18 @@ export default function Profile (
   const rerender = () => setRerender(!toggle)
 
   return (
-    <Page
-      user={user}
-      notifications={notifications}
-      pageName="user"
-      pageHeader={
-        <PageHeader breadCrumbs={breadCrumbs(selected)} />
-      }
+    <Tabs
+      onRequestTabChange={(_, { index }) => setSelected(index)}
     >
-      <Tabs
-        onRequestTabChange={(_, { index }) => setSelected(index)}
+      <Tabs.Panel
+        id='user_info'
+        selected={selected === tabs.user_info}
+        renderTitle="User Information"
       >
-        <Tabs.Panel
-          id='user_info'
-          selected={selected === tabs.user_info}
-          renderTitle="User Information"
-        >
-          <View as="div">
-            <User user={user}/>
-          </View>
-        </Tabs.Panel>
-      </Tabs>
-    </Page>
+        <View as="div">
+          <User user={user}/>
+        </View>
+      </Tabs.Panel>
+    </Tabs>
   )
 }
