@@ -12,7 +12,7 @@ const router = Router()
     resolve({view: Recipes, pageName: 'recipes'})
   })
   .use('/:id', ({params, resolve}) => {
-    resolve({view: Recipe, pageName: 'recipe', params})
+    resolve({view: Recipe, pageName: 'recipes', params})
   })
 
 export default router

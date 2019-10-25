@@ -10,6 +10,7 @@ import { IconInboxLine } from '@instructure/ui-icons'
 import { IconComposeLine } from '@instructure/ui-icons'
 import { IconHamburgerSolid } from '@instructure/ui-icons'
 import { IconAssignmentLine } from '@instructure/ui-icons'
+import { IconQuizInstructionsLine } from '@instructure/ui-icons'
 import { IconXLine } from '@instructure/ui-icons'
 import { ScreenReaderContent } from '@instructure/ui-a11y'
 import { Avatar, Heading } from '@instructure/ui-elements'
@@ -63,6 +64,12 @@ function LargePageNavigation (
           href="#!home"
           selected={pageName == 'home'}
         />
+        <Navigation.Item
+          icon={<IconQuizInstructionsLine />}
+          label="Recipes"
+          href="#!recipes"
+          selected={pageName == 'recipes'}
+        />
       </Navigation>
     </div>
   )
@@ -110,6 +117,9 @@ function SmallPageNavigation (
         </Button> */}
         <Button fluidWidth icon={<IconAssignmentLine />} href="#!home" margin="x-small">
           Weekly Plans
+        </Button>
+        <Button fluidWidth icon={<IconQuizInstructionsLine />} href="#!recipes" margin="x-small">
+          Recipes
         </Button>
       </View>
     </Tray>

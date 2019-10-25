@@ -1,9 +1,12 @@
 // @flow
 
 import React from 'react'
+import { gql } from "apollo-boost";
+import { useQuery } from '@apollo/react-hooks'
 
 import { View } from '@instructure/ui-layout'
 import { Tabs } from '@instructure/ui-tabs'
+import { Spinner } from '@instructure/ui-elements'
 
 import PageHeader from '../../components/PageHeader'
 import Page from '../../components/Page'
@@ -19,13 +22,30 @@ const tabs = {
 // eslint-disable-next-line no-undef
 type TabTypes = $Keys<typeof tabs>;
 
+const userInfoQuery = gql`
+  {
+    user {
+      displayName
+      preferredName
+      email
+    }
+  }
+`
+
 export default function Profile (
-  {user, notifications, tab = 'user_info'} : {user: UserType, notifications: Array<NotificationType>, tab?: TabTypes}
+  {tab = 'user_info'} : {tab?: TabTypes}
 ) {
   const [selected: string, setSelected] = React.useState(tabs[tab])
-  const [toggle, setRerender] = React.useState(false)
+  const { loading, error, data } = useQuery(userInfoQuery)
 
-  const rerender = () => setRerender(!toggle)
+  if (loading) return <Spinner renderTitle="Loading" size="large" margin="0 0 0 medium" />;
+  if (error){
+    if (new RegExp('Received status code 401').test(error.toString())) {
+      setTimeout(() => window.location = '/auth/identity', 1000)
+      return <p>User not authenticated. Being redirected to login in 1 second...</p>;
+    }
+    return <p>Something has gone wrong. Reload the page, clear cookies and cache, and try again.</p>
+  }
 
   return (
     <Tabs
@@ -37,7 +57,7 @@ export default function Profile (
         renderTitle="User Information"
       >
         <View as="div">
-          <User user={user}/>
+          <User user={data.user || {}}/>
         </View>
       </Tabs.Panel>
     </Tabs>

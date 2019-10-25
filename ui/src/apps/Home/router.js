@@ -8,7 +8,7 @@ import Home from './'
 
 const router = Router()
   .use('/', ({resolve}) => {
-    resolve({view: Home, pageName: 'weekly plan'})
+    resolve({view: Home, pageName: 'home'})
   })
 
 export default router

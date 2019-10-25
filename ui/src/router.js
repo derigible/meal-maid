@@ -21,7 +21,7 @@ const configureRouter = () => {
     .lazy('/user', () => new Promise((resolve) => require.ensure(
       [], (require) => resolve(require('./apps/Profile/router').default), 'user'
     )))
-    .lazy('/recipe', () => new Promise((resolve) => require.ensure(
+    .lazy('/recipes', () => new Promise((resolve) => require.ensure(
       [], (require) => resolve(require('./apps/Recipes/router').default), 'recipes'
     )))
     .use('/*', ({ path, resolve, exiting }) => {

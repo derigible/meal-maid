@@ -72,6 +72,7 @@
     "@instructure/ui-themeable": "^6.14.0",
     "@instructure/ui-themes": "^6.14.0",
     "@instructure/ui-toggle-details": "^6.14.0",
+    "@instructure/ui-tooltip": "^6.14.0",
     "@instructure/ui-utils": "^6.14.0",
     "@instructure/ui-webpack-config": "^6.14.0",
     "apollo-boost": "^0.4.4",

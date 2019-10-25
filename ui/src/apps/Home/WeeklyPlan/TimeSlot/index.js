@@ -20,7 +20,7 @@ export default function TimeSlot ({recipe, isPast} : {recipe?: RecipeType, isPas
             variant="link"
             margin="x-small"
             onClick={isPast ? null : handleUpdateRecipe}
-            href={isPast ? `#!/recipe/${recipe.id}` : null}
+            href={isPast ? `#!/recipes/${recipe.id}` : null}
           >
             {recipe.title}
           </Button>
