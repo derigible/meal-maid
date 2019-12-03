@@ -1,23 +1,22 @@
 // @flow
 
-import React from 'react'
+import React from "react";
 
-import { Button } from '@instructure/ui-buttons'
-import { Grid } from '@instructure/ui-layout'
-import { Text } from '@instructure/ui-elements'
-import { IconSaveLine } from '@instructure/ui-icons'
+import { Button } from "@instructure/ui-buttons";
+import { Grid } from "@instructure/ui-layout";
+import { IconSaveLine } from "@instructure/ui-icons";
 
-import StandardEdit from '../StandardEdit'
+import StandardEdit from "../StandardEdit";
 
 export type UserType = {
   displayName: string,
   email: string,
   preferredName: string
-}
+};
 type NotificationData = {
   type?: string,
   details: string
-}
+};
 
 export type NotificationType = {
   data: NotificationData,
@@ -25,29 +24,29 @@ export type NotificationType = {
   read: boolean,
   created_at: string,
   updated_at: string
-}
+};
 
 type ComponentActionType = {
   type: string,
   payload: string
-}
+};
 
 function reducer(state: UserType, action: ComponentActionType) {
   switch (action.type) {
-    case 'displayName':
-      return {...state, displayName: action.payload}
-    case 'email':
-      return {...state, email: action.payload}
-    case 'preferredName':
-      return {...state, preferredName: action.payload}
+    case "displayName":
+      return { ...state, displayName: action.payload };
+    case "email":
+      return { ...state, email: action.payload };
+    case "preferredName":
+      return { ...state, preferredName: action.payload };
     default:
       throw new Error();
   }
 }
 
-export default function User ({user} : {user: UserType}) {
-  const [userObj: UserType, setUserChanges] = React.useReducer(reducer, user)
-  const [userChanged: boolean, setUserChanged] = React.useState(false)
+export default function User({ user }: { user: UserType }) {
+  const [userObj: UserType, setUserChanges] = React.useReducer(reducer, user);
+  const [userChanged: boolean, setUserChanged] = React.useState(false);
 
   return (
     <>
@@ -57,14 +56,26 @@ export default function User ({user} : {user: UserType}) {
             <StandardEdit
               label="Display Name"
               value={userObj.displayName}
-              onChange={(e) => {setUserChanged(true); setUserChanges({type: 'displayName', payload: e.target.value})}}
+              onChange={e => {
+                setUserChanged(true);
+                setUserChanges({
+                  type: "displayName",
+                  payload: e.target.value
+                });
+              }}
             />
           </Grid.Col>
           <Grid.Col>
             <StandardEdit
               label="Preferred Name"
               value={userObj.preferredName}
-              onChange={(e) => {setUserChanged(true); setUserChanges({type: 'preferredName', payload: e.target.value})}}
+              onChange={e => {
+                setUserChanged(true);
+                setUserChanges({
+                  type: "preferredName",
+                  payload: e.target.value
+                });
+              }}
             />
           </Grid.Col>
         </Grid.Row>
@@ -73,7 +84,10 @@ export default function User ({user} : {user: UserType}) {
             <StandardEdit
               label="Email"
               value={userObj.email}
-              onChange={(e) => {setUserChanged(true); setUserChanges({type: 'email', payload: e.target.value})}}
+              onChange={e => {
+                setUserChanged(true);
+                setUserChanges({ type: "email", payload: e.target.value });
+              }}
             />
           </Grid.Col>
         </Grid.Row>
@@ -88,5 +102,5 @@ export default function User ({user} : {user: UserType}) {
         Save Changes
       </Button>
     </>
-  )
+  );
 }

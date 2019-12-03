@@ -1,22 +1,22 @@
 // @flow
 
-import * as React from 'react'
-import ReactDOM from 'react-dom'
-import theme from '@instructure/canvas-theme'
-import ApolloClient from 'apollo-boost'
-import { ApolloProvider, useQuery } from '@apollo/react-hooks'
-import { gql } from "apollo-boost";
-import { Spinner } from '@instructure/ui-elements'
+import * as React from "react";
+import ReactDOM from "react-dom";
+import theme from "@instructure/canvas-theme";
+import ApolloClient, { gql } from "apollo-boost";
+import { ApolloProvider, useQuery } from "@apollo/react-hooks";
 
-import Page from './components/Page'
+import { Spinner } from "@instructure/ui-elements";
 
-import configureRouter from './router'
+import Page from "./components/Page";
 
-theme.use()
+import configureRouter from "./router";
 
-const mountPoint = document.getElementById('app')
+theme.use();
 
-const router = configureRouter()
+const mountPoint = document.getElementById("app");
+
+const router = configureRouter();
 
 function readCookie(name) {
   var nameEQ = name + "=";
@@ -24,29 +24,23 @@ function readCookie(name) {
   for (var i = 0; i < ca.length; i++) {
     var c = ca[i];
     while (c.charAt(0) === " ") c = c.substring(1, c.length);
-    if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
+    if (c.indexOf(nameEQ) === 0)
+      return decodeURIComponent(c.substring(nameEQ.length, c.length));
   }
   return null;
 }
 
 const client = new ApolloClient({
-  request: (operation) => {
-    const token = localStorage.getItem('token')
+  request: operation => {
     operation.setContext({
       headers: {
-        'X-CSRF-TOKEN': readCookie("X-CSRF-Token")
+        "X-CSRF-TOKEN": readCookie("X-CSRF-Token")
       }
-    })
+    });
   }
 });
 
-const user = {
-  displayName: 'Marc Phillips',
-  email: 'mphillips@outlook.com',
-  preferredName: 'derigible'
-}
-
-const notifications = []
+const notifications = [];
 
 const initialQuery = gql`
   {
@@ -142,40 +136,46 @@ const initialQuery = gql`
       }
     }
   }
-`
+`;
 
-function LoginCheck ({View, pageName, params}) {
+function LoginCheck({ View, pageName, params }) {
   const { loading, error, data } = useQuery(initialQuery);
 
-  if (loading) return <Spinner renderTitle="Loading" size="large" margin="0 0 0 medium" />;
-  if (error){
-    if (new RegExp('Received status code 401').test(error.toString())) {
-      setTimeout(() => window.location = '/auth/identity', 1000)
-      return <p>User not authenitcated. Being redirected to login in 1 second...</p>;
+  if (loading)
+    return <Spinner renderTitle="Loading" size="large" margin="0 0 0 medium" />;
+  if (error) {
+    if (new RegExp("Received status code 401").test(error.toString())) {
+      setTimeout(() => (window.location = "/auth/identity"), 1000);
+      return (
+        <p>User not authenitcated. Being redirected to login in 1 second...</p>
+      );
     }
-    return <p>Something has gone wrong. Reload the page, clear cookies and cache, and try again.</p>
+    return (
+      <p>
+        Something has gone wrong. Reload the page, clear cookies and cache, and
+        try again.
+      </p>
+    );
   }
 
   return (
-    <Page
-      user={data.user}
-      notifications={notifications}
-      pageName={pageName}
-    >
+    <Page user={data.user} notifications={notifications} pageName={pageName}>
       <View weeklyPlan={data.currentWeeklyPlan} {...params} />
     </Page>
-  )
+  );
 }
 
 if (mountPoint !== null) {
-  router.on('route', async (_, routing) => {
-    const { view, pageName, params = {} } = await routing
+  router
+    .on("route", async (_, routing) => {
+      const { view, pageName, params = {} } = await routing;
 
-    ReactDOM.render(
-      <ApolloProvider client={client}>
-        <LoginCheck View={view} params={params} pageName={pageName} />
-      </ApolloProvider>,
-      mountPoint
-    )
-  }).start()
+      ReactDOM.render(
+        <ApolloProvider client={client}>
+          <LoginCheck View={view} params={params} pageName={pageName} />
+        </ApolloProvider>,
+        mountPoint
+      );
+    })
+    .start();
 }

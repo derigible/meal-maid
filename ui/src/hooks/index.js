@@ -1,9 +1,13 @@
 // @flow
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 // https://usehooks.com/useMedia/
-export function useMedia(queries: Array<string>, values: Array<any>, defaultValue: any) {
+export function useMedia(
+  queries: Array<string>,
+  values: Array<any>,
+  defaultValue: any
+) {
   // Array containing a media query list for each query
   const mediaQueryLists = queries.map(q => window.matchMedia(q));
 
@@ -12,7 +16,7 @@ export function useMedia(queries: Array<string>, values: Array<any>, defaultValu
     // Get index of first media query that matches
     const index = mediaQueryLists.findIndex(mql => mql.matches);
     // Return related value or defaultValue if none
-    return typeof values[index] !== 'undefined' ? values[index] : defaultValue;
+    return typeof values[index] !== "undefined" ? values[index] : defaultValue;
   };
 
   // State and setter for matched value

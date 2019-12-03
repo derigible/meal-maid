@@ -1,5 +1,5 @@
-function start () {
-  require('./index')
+function start() {
+  require("./index");
 }
 
-start()
+start();

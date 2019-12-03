@@ -1,64 +1,64 @@
-import React from 'react'
+import React from "react";
 
-import { Responsive } from '@instructure/ui-layout'
-import { Table } from '@instructure/ui-table'
-import { Alert } from '@instructure/ui-alerts'
+import { Responsive } from "@instructure/ui-layout";
+import { Table } from "@instructure/ui-table";
+import { Alert } from "@instructure/ui-alerts";
 
 export default class SortableTable extends React.Component {
-  constructor (props) {
-    super(props)
-    const { headers } = props
+  constructor(props) {
+    super(props);
+    const { headers } = props;
 
     this.state = {
       sortBy: headers && headers[0] && headers[0].id,
-      ascending: true,
-    }
+      ascending: true
+    };
   }
 
   handleSort = (event, { id }) => {
-    const { sortBy, ascending } = this.state
+    const { sortBy, ascending } = this.state;
 
     if (id === sortBy) {
       this.setState({
-        ascending: !ascending,
-      })
+        ascending: !ascending
+      });
     } else {
       this.setState({
         sortBy: id,
-        ascending: true,
-      })
+        ascending: true
+      });
     }
-  }
+  };
 
   render() {
-    const { caption, headers, rows } = this.props
-    const { sortBy, ascending } = this.state
-    const direction = ascending ? 'ascending' : 'descending'
+    const { caption, headers, rows } = this.props;
+    const { sortBy, ascending } = this.state;
+    const direction = ascending ? "ascending" : "descending";
     const sortedRows = [...(rows || [])].sort((a, b) => {
       if (a[sortBy] < b[sortBy]) {
-        return -1
+        return -1;
       }
       if (a[sortBy] > b[sortBy]) {
-        return 1
+        return 1;
       }
-      return 0
-    })
+      return 0;
+    });
 
     if (!ascending) {
-      sortedRows.reverse()
+      sortedRows.reverse();
     }
     return (
       <Responsive
         query={{
-          small: { maxWidth: '40rem' },
-          large: { minWidth: '41rem' },
+          small: { maxWidth: "40rem" },
+          large: { minWidth: "41rem" }
         }}
         props={{
-          small: { layout: 'stacked' },
-          large: { layout: 'auto' },
+          small: { layout: "stacked" },
+          large: { layout: "auto" }
         }}
       >
-        {(props) => (
+        {props => (
           <div>
             <Table
               caption={`${caption}: sorted by ${sortBy} in ${direction} order`}
@@ -71,15 +71,15 @@ export default class SortableTable extends React.Component {
                       key={id}
                       id={id}
                       onRequestSort={this.handleSort}
-                      sortDirection={id === sortBy ? direction : 'none'}
+                      sortDirection={id === sortBy ? direction : "none"}
                     >
                       {text}
                     </Table.ColHeader>
-                   ))}
+                  ))}
                 </Table.Row>
               </Table.Head>
               <Table.Body>
-                {sortedRows.map((row) => (
+                {sortedRows.map(row => (
                   <Table.Row key={row.id}>
                     {headers.map(({ id, renderCell }) => (
                       <Table.Cell key={id}>
@@ -91,7 +91,7 @@ export default class SortableTable extends React.Component {
               </Table.Body>
             </Table>
             <Alert
-              liveRegion={() => document.getElementById('alertHolder')}
+              liveRegion={() => document.getElementById("alertHolder")}
               liveRegionPoliteness="polite"
               screenReaderOnly
             >
@@ -100,6 +100,6 @@ export default class SortableTable extends React.Component {
           </div>
         )}
       </Responsive>
-    )
+    );
   }
 }

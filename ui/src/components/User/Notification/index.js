@@ -1,30 +1,31 @@
 // @flow
 
-import React from 'react'
+import React from "react";
 
-import { View } from '@instructure/ui-layout'
-import { ToggleGroup } from '@instructure/ui-toggle-details'
-import { IconXSolid, IconPlusSolid } from '@instructure/ui-icons'
+import { View } from "@instructure/ui-layout";
+import { ToggleGroup } from "@instructure/ui-toggle-details";
+import { IconXSolid, IconPlusSolid } from "@instructure/ui-icons";
 
-import type { NotificationType } from '../'
+import type { NotificationType } from "../";
 
-export default function Notification ({notification} : {notification: NotificationType}) {
-  const [expanded, setExpanded] = React.useState(false)
+export default function Notification({
+  notification
+}: {
+  notification: NotificationType
+}) {
+  const [expanded, setExpanded] = React.useState(false);
   return (
     <ToggleGroup
       toggleLabel="Toggle to edit details"
-      summary={notification.data.type || 'Alert'}
+      summary={notification.data.type || "Alert"}
       iconExpanded={IconXSolid}
       icon={IconPlusSolid}
       expanded={expanded}
       onToggle={() => setExpanded(!expanded)}
     >
-      <View
-        as="div"
-        padding="small"
-      >
+      <View as="div" padding="small">
         {notification.data.details}
       </View>
     </ToggleGroup>
-  )
+  );
 }

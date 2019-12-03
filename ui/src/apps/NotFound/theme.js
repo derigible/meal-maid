@@ -1,7 +1,7 @@
-export default function ({ colors, spacing, typography }) {
+export default function({ colors, spacing, typography }) {
   return {
     wrapperPadding: spacing.medium,
-    heroFontSize: '20rem',
+    heroFontSize: "20rem",
     heroColor: colors.tiara,
     textWrapperMarginBottom: spacing.medium,
     textWrapperColor: colors.ash,
@@ -9,5 +9,5 @@ export default function ({ colors, spacing, typography }) {
     titleMargin: spacing.xxSmall,
     subTitleFontSize: typography.fontSizeSmall,
     buttonWrapperMargin: spacing.small
-  }
+  };
 }
