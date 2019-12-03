@@ -160,7 +160,7 @@ function LoginCheck({ View, pageName, params }) {
 
   return (
     <Page user={data.user} notifications={notifications} pageName={pageName}>
-      <View weeklyPlan={data.currentWeeklyPlan} {...params} />
+      <View weeklyPlan={data.currentWeeklyPlan || {}} {...params} />
     </Page>
   );
 }

@@ -33,7 +33,7 @@ const days = [
 ];
 
 export default function WeeklyPlan({
-  weeklyPlan = {}
+  weeklyPlan
 }: {
   weeklyPlan: WeeklyPlanType
 }) {

@@ -68,6 +68,7 @@ function SmallPageNavigation({
           fluidWidth
           icon={<IconAssignmentLine />}
           href="#!home"
+          onClick={() => setNavOpen(!navOpen)}
           margin="x-small"
         >
           Weekly Plans
@@ -76,6 +77,7 @@ function SmallPageNavigation({
           fluidWidth
           icon={<IconQuizInstructionsLine />}
           href="#!recipes"
+          onClick={() => setNavOpen(!navOpen)}
           margin="x-small"
         >
           Recipes
