@@ -57,7 +57,14 @@ function TableRecipes({ recipes = [] }) {
       headers={[
         {
           id: "title",
-          text: "Title"
+          text: "Title",
+          /* eslint-disable react/display-name */
+          renderCell: (title, row) => (
+            <Button variant="link" href={`#!recipes/${row.id}`}>
+              {title}
+            </Button>
+          )
+          /* eslint-enable react/display-name */
         },
         {
           id: "time",
@@ -67,17 +74,6 @@ function TableRecipes({ recipes = [] }) {
           id: "rating",
           text: "Rating",
           renderCell: rating => rating.toFixed(1)
-        },
-        {
-          id: "id",
-          text: "More",
-          /* eslint-disable react/display-name */
-          renderCell: id => (
-            <Button variant="link" href={`#!recipes/${id}`}>
-              More
-            </Button>
-          )
-          /* eslint-enable react/display-name */
         }
       ]}
       rows={recipes}

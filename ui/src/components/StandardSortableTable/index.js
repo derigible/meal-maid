@@ -83,7 +83,7 @@ export default class SortableTable extends React.Component {
                   <Table.Row key={row.id}>
                     {headers.map(({ id, renderCell }) => (
                       <Table.Cell key={id}>
-                        {renderCell ? renderCell(row[id]) : row[id]}
+                        {renderCell ? renderCell(row[id], row) : row[id]}
                       </Table.Cell>
                     ))}
                   </Table.Row>

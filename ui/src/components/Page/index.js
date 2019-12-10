@@ -73,7 +73,7 @@ function Navigation({
           onClick={() => setNavOpen(!navOpen)}
           margin="x-small"
         >
-          Weekly Plans
+          Weekly Plan
         </Button>
         <Button
           fluidWidth
