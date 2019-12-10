@@ -44,11 +44,7 @@ export default function WeeklyPlan({
   );
 
   return (
-    <View
-      as="div"
-      maxWidth="80rem"
-      margin={layout.direction === "row" ? null : "auto"}
-    >
+    <View as="div" maxWidth="80rem" margin="auto">
       <Flex {...layout} justifyItems="space-between">
         {days.map(d => {
           const dayIndex = days.indexOf(d);

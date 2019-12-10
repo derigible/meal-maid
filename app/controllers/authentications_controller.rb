@@ -22,7 +22,7 @@ class AuthenticationsController < ApplicationController
       reset_session
       session['current_user_id'] = login.user.id
       set_csrf_cookie
-      redirect_to '/#!home'
+      redirect_to '/#!weeklyPlan'
     end
   end
 

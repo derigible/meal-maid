@@ -20,7 +20,7 @@ export default function StandardEditModal({
   onSave?: any,
   children: React.Node,
   modalTitle: string,
-  size?: size,
+  size?: string,
   submitDisabled?: boolean
 }) {
   const closeButton = () => (

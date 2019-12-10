@@ -22,18 +22,18 @@ const configureRouter = () => {
           require.ensure(
             [],
             require => resolve(require("./apps/Home/router").default),
-            "home"
+            "weeklyPlan"
           )
         )
     )
     .lazy(
-      "/home",
+      "/weeklyPlan",
       () =>
         new Promise(resolve =>
           require.ensure(
             [],
             require => resolve(require("./apps/Home/router").default),
-            "home"
+            "weeklyPlan"
           )
         )
     )

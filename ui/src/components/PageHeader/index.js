@@ -2,12 +2,26 @@
 
 import React from "react";
 
-import { Heading } from "@instructure/ui-elements";
+import { Heading, Link } from "@instructure/ui-elements";
 import { Breadcrumb } from "@instructure/ui-breadcrumb";
 import { View } from "@instructure/ui-layout";
 import { capitalizeFirstLetter } from "@instructure/ui-utils";
 
 import type { BreadCrumbType } from "./type";
+
+function linkFromDisplayName(displayName) {
+  return `#!${displayName
+    .split(" ")
+    .join("")
+    .replace(displayName[0], displayName[0].toLowerCase())}`;
+}
+
+function displayNameFromPageName(pageName) {
+  return pageName
+    .split(" ")
+    .map(s => capitalizeFirstLetter(s))
+    .join(" ");
+}
 
 export default function PageHeader({
   pageName,
@@ -18,13 +32,18 @@ export default function PageHeader({
   size?: string
 }) {
   if (pageName) {
+    const displayName = displayNameFromPageName(pageName);
     return (
-      <Heading level="h1" border="bottom">
-        {pageName
-          .split(" ")
-          .map(s => capitalizeFirstLetter(s))
-          .join(" ")}
-      </Heading>
+      <View display="inline-block" margin="medium none">
+        <Heading
+          level="h1"
+          margin="medium none"
+          as="a"
+          href={linkFromDisplayName(displayName)}
+        >
+          {displayName}
+        </Heading>
+      </View>
     );
   } else if (breadCrumbs && breadCrumbs.length > 0) {
     return (

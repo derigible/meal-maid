@@ -20,7 +20,7 @@ import PageHeader from "../PageHeader";
 
 import type { UserType, NotificationType } from "../User";
 
-function SmallPageNavigation({
+function Navigation({
   navOpen,
   setNavOpen,
   user,
@@ -40,7 +40,7 @@ function SmallPageNavigation({
       onDismiss={() => setNavOpen(!navOpen)}
       size="small"
     >
-      <View as="div" margin="xx-small small">
+      <View as="div" margin="none small">
         <Flex>
           <Flex.Item grow shrink>
             <Heading level="h2" margin="x-small xxx-small">
@@ -57,17 +57,19 @@ function SmallPageNavigation({
             </Button>
           </Flex.Item>
         </Flex>
-        <Button variant="link" size="small" href="#!user" margin="x-small">
+        <Button
+          variant="link"
+          size="small"
+          href="#!user"
+          margin="x-small"
+          onClick={() => setNavOpen(!navOpen)}
+        >
           <Avatar name={user.displayName} size="x-small" />
         </Button>
-        {/* Add back in when notifications added again
-        <Button fluidWidth icon={<Badge count={notifications.length}><IconInboxLine /></Badge>} href="#!user/inbox" margin="x-small">
-          Inbox
-        </Button> */}
         <Button
           fluidWidth
           icon={<IconAssignmentLine />}
-          href="#!home"
+          href="#!weeklyPlan"
           onClick={() => setNavOpen(!navOpen)}
           margin="x-small"
         >
@@ -103,21 +105,15 @@ export default function Page({
   const [navOpen: boolean, setNavOpen] = React.useState(false);
 
   return (
-    <div>
-      <SmallPageNavigation
+    <View as="div" maxWidth="100rem" margin="auto">
+      <Navigation
         navOpen={navOpen}
         setNavOpen={setNavOpen}
         user={user}
         notifications={notifications}
         pageName={pageName}
       />
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          padding: "0.25 rem"
-        }}
-      >
+      <div style={{ margin: "auto", textAlign: "center" }}>
         <Flex margin="small none">
           <Flex.Item>
             <Button
@@ -139,6 +135,6 @@ export default function Page({
         </Flex>
         {children}
       </div>
-    </div>
+    </View>
   );
 }

@@ -27,7 +27,7 @@ describe AuthenticationsController do
     context 'with confirmed user' do
       let(:login) { create :login, :confirmed, user: current_user }
 
-      it { is_expected.to redirect_to %r{\/#\!home} }
+      it { is_expected.to redirect_to %r{\/#\!weeklyPlan} }
     end
   end
 end
